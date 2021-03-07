@@ -8,6 +8,7 @@
       <th>Name</th>
       <th>Price</th>
       <th>PAYMENT</th>
+      <th>Sales count</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,8 +17,9 @@
     <% @products.each do |product| %>
       <tr>
         <td><%= product.name %></td>
-        <td><%= product.price %></td>
+        <td><%= number_to_currency(product.price/100) %></td>
         <td><%= button_to "Buy now!", checkout_create_path, params: {id: product.id}, remote: true %></td>
+        <td><%= product.sales_count %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
