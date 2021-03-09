@@ -11,8 +11,17 @@
   </head>
 
   <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= link_to "Products", products_path %>
     <%= link_to "Github", "https://github.com/yshmarov/shoplify", target: "_blank" %>
+    <% if current_user %>
+      <%= link_to current_user.email, edit_user_registration_path %>
+      <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to "Log in", new_user_session_path %>
+      <%= link_to "Register", new_user_registration_path %>
+    <% end %>
     <hr>
     <%= yield %>
   </body>
