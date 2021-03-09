@@ -22,7 +22,7 @@
         <td><%= number_to_currency(product.price/100) %></td>
         <td><%= product.stripe_product_id %></td>
         <td><%= product.stripe_price_id %></td>
-        <td><%= button_to "Buy now!", checkout_create_path, params: {id: product.id}, remote: true %></td>
+        <td><%= button_to "Buy now!", checkout_create_path, params: {id: product.id}, remote: true, data: { disable_with: "validating..."} %></td>
         <td><%= product.sales_count %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
