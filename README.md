@@ -125,3 +125,17 @@ view
   <%= debug @payment_intent %>
 <% end %>
 ```
+
+## possible webhook for retreiving products
+
+```
+when "checkout.session.completed"
+session = event.data.object
+user = User.find_by(stripe_customer_id: session.customer)
+checkout_with_items = Stripe::Checkout.Session.retrieve({id: session.id, expand: ["line_items"]})
+checkout_with_items.line_items.data.each do |line_item|
+  product = Product.find_by(stripe_product_id: line_item.price.product)
+  user.user_products.create(product: product, price: line_item.price.unit_amount)
+  product.increment!(:sales_count)
+end
+```
