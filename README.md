@@ -142,24 +142,6 @@ end
 
 ## session-based shopping cart
 
-routes
-```
-post "products/add_to_cart/:id", to: "products#add_to_cart", as: "add_to_cart"
-delete "products/remove_from_cart/:id", to: "products#remove_from_cart", as: "remove_from_cart"
-```
-application.html.erb
-```
-Visits: <%= @visit_count %>
-<h1>Shopping cart</h1>
-Items:
-<%= @cart.size %>
-<br>
-<% @cart.each do |cart_item| %>
-  <br>
-  <%= cart_item.name %>
-  <%= link_to "x", remove_from_cart_path(cart_item), method: :delete %>
-<% end %>
-```
 products/index inside table
 ```
 <% if @cart.include?(product) %>
@@ -168,12 +150,13 @@ products/index inside table
   <%= button_to "Add to cart", add_to_cart_path(product) %>
 <% end %>
 ```
+routes
+```
+post "products/add_to_cart/:id", to: "products#add_to_cart", as: "add_to_cart"
+delete "products/remove_from_cart/:id", to: "products#remove_from_cart", as: "remove_from_cart"
+```
 products_controller.rb
 ```
-  before_action :initialize_session
-  before_action :increment_visit_count
-  before_action :load_cart
-
   def add_to_cart
     id = params[:id].to_i
     session[:cart] << id unless session[:cart].include?(id)
@@ -185,21 +168,31 @@ products_controller.rb
     session[:cart].delete(id)
     redirect_to products_path
   end
+```
+application_controller
+```
+  before_action :initialize_session
+  before_action :load_cart
 
   private
 
   def initialize_session
-    session[:visit_count] ||= 0 # 0 by default
     session[:cart] ||= [] # empty cart = empty array
-  end
-  
-  def increment_visit_count
-    session[:visit_count] += 1
-    @visit_count = session[:visit_count]
   end
 
   def load_cart
     @cart = Product.find(session[:cart])
   end
 ```
-
+application.html.erb
+```
+<h1>Shopping cart</h1>
+Items:
+<%= @cart.size %>
+<br>
+<% @cart.each do |cart_item| %>
+  <br>
+  <%= cart_item.name %>
+  <%= link_to "x", remove_from_cart_path(cart_item), method: :delete %>
+<% end %>
+```
