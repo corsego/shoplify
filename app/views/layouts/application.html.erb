@@ -24,6 +24,12 @@
       <%= link_to "Register", new_user_registration_path %>
     <% end %>
     <hr>
+    <h1>Shopping cart</h1>
+    <% @cart.each do |product| %>
+      <%= product.name %>
+      <br>
+    <% end %>
+    <hr>
     <%= yield %>
   </body>
 </html>
