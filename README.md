@@ -196,3 +196,18 @@ Items:
   <%= link_to "x", remove_from_cart_path(cart_item), method: :delete %>
 <% end %>
 ```
+
+## transform items from shopping cart into stripe line_items
+product.rb
+```
+def to_builder
+	Jbuilder.new do |product|
+	  product.price stripe_price_id
+	  product.quantity 1
+	end
+end
+```
+checkout_controller
+```
+@cart.collect { |item| item.to_builder.attributes! },
+```

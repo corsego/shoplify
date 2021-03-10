@@ -6,6 +6,13 @@ class Product < ApplicationRecord
     name
   end
 
+  def to_builder
+    Jbuilder.new do |product|
+      product.price stripe_price_id
+      product.quantity 1
+    end
+  end
+
   after_create do
     product = Stripe::Product.create(name: name)
     price = Stripe::Price.create(product: product, unit_amount: self.price, currency: "usd")

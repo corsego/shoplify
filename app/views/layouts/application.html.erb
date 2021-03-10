@@ -29,6 +29,10 @@
       <%= product.name %>
       <br>
     <% end %>
+    <% if @cart.present? %>
+      <%= @cart.collect { |item| item.to_builder.attributes! } %>
+      <%= button_to "Buy now!", checkout_create_path, remote: true, data: { disable_with: "validating..."} %>
+    <% end %>
     <hr>
     <%= yield %>
   </body>
