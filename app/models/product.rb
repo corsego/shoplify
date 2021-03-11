@@ -6,6 +6,8 @@ class Product < ApplicationRecord
     name
   end
 
+  monetize :price, as: :price_cents
+
   def to_builder
     Jbuilder.new do |product|
       product.price stripe_price_id
