@@ -31,7 +31,7 @@ EDITOR=vim rails credentials:edit
 credentials.yml structure:
 ```
 stripe:
-  publishable: YOUR_CODE
+  public: YOUR_CODE
   secret: YOUR_CODE
   webhook: YOUR_CODE
 ```

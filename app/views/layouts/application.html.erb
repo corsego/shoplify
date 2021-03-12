@@ -11,8 +11,8 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <p class="notice" style="background-color: green;"><%= notice %></p>
+    <p class="alert" style="background-color: red;"><%= alert %></p>
     <%= link_to "Products", products_path %>
     <%= link_to "Github", "https://github.com/yshmarov/shoplify", target: "_blank" %>
     <% if current_user %>
@@ -25,6 +25,7 @@
     <% end %>
     <hr>
     <h1>Shopping cart</h1>
+    <hr>
     <% @cart.each do |product| %>
       <%= product.name %>
       <br>
