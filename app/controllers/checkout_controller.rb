@@ -1,7 +1,7 @@
 class CheckoutController < ApplicationController
   
   def create
-    if @cart.pluck(:currency).length > 1
+    if @cart.pluck(:currency).uniq.length > 1
       redirect_to products_path, alert: "You can not select products with different currencies in one checkout"
     else
       @session = Stripe::Checkout::Session.create({
