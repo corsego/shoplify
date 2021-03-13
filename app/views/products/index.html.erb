@@ -8,9 +8,11 @@
       <th>Price</th>
       <th>Stripe Product Id</th>
       <th>Stripe Price Id</th>
+      <th>Stripe Currency</th>
+      <th>Stripe Price</th>
       <th>Shopping cart</th>
       <th>Sales count</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -22,6 +24,8 @@
         <td><%= product.price_cents %></td>
         <td><%= product.stripe_product_id %></td>
         <td><%= product.stripe_price_id %></td>
+        <td><%= Stripe::Price.retrieve(product.stripe_price_id).currency %></td>
+        <td><%= Stripe::Price.retrieve(product.stripe_price_id).unit_amount/100 %></td>
         <td>
           <% if @cart.include?(product) %>
             <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete %>
@@ -31,7 +35,6 @@
         </td>
         <td><%= product.sales_count %></td>
         <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
