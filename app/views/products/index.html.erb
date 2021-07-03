@@ -24,8 +24,8 @@
         <td><%= product.price_cents %></td>
         <td><%= product.stripe_product_id %></td>
         <td><%= product.stripe_price_id %></td>
-        <td><%= Stripe::Price.retrieve(product.stripe_price_id).currency %></td>
-        <td><%= Stripe::Price.retrieve(product.stripe_price_id).unit_amount/100 %></td>
+        <td><%= Stripe::Price.retrieve(product.stripe_price_id)&.currency %></td>
+        <td><%= Stripe::Price.retrieve(product.stripe_price_id)&.unit_amount/100 %></td>
         <td>
           <% if @cart.include?(product) %>
             <%= button_to "Remove from cart", remove_from_cart_path(product), method: :delete %>
